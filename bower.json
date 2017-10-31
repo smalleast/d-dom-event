@@ -1,0 +1,26 @@
+{
+  "name": "d-dom-event",
+  "description": "Dom event api based on next toolkit.",
+  "main": "dist/d-dom-event.js",
+  "authors": [
+    "afei"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "next"
+  ],
+  "homepage": "https://github.com/afeiship/d-dom-event",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "gulp",
+    "gulpfile.js"
+  ]
+}
