@@ -1,10 +1,8 @@
 (function () {
 
-  var global = global || this || self || window;
+  var global = this || window;
   var nx = global.nx || require('next-js-core2');
   var document = global.document;
-  var FUNCTION = 'function';
-
   var addEventListener = (function () {
     if (document.addEventListener) {
       return function (inElement, inName, inCallback, inCapture) {
@@ -44,20 +42,31 @@
   var DomEvent = nx.declare('nx.dom.Event', {
     statics: {
       on: function () {
-        var target = arguments[0];
-        var onFn = target.on;
-        if (typeof(onFn) === FUNCTION) {
-          return onFn.call.apply(onFn, arguments);
-        } else {
-          var args = nx.slice(arguments);
-          var context = args[0];
-          addEventListener.apply(context, args);
-          return {
-            destroy: function () {
-              return removeEventListener.apply(context, args);
-            }
+        var args = nx.toArray(arguments);
+        addEventListener.apply(null,args);
+        return {
+          destroy:function(){
+            return removeEventListener.apply(null,args);
           }
         }
+      },
+      timeout: function(inCallback,inInterval){
+        var timer = global.setTimeout(inCallback,inInterval || 0);
+        return {
+          destroy:function(){
+            clearTimeout(timer);
+            timer = null;
+          }
+        };
+      },
+      interval: function(inCallback,inInterval){
+        var timer = global.setInterval(inCallback,inInterval || 0);
+        return {
+          destroy:function(){
+            clearInterval(timer);
+            timer = null;
+          }
+        };
       }
     }
   });
